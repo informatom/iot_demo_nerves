@@ -15,5 +15,6 @@ SensorHub is an **IOT-Demo Project Weather Station**
 * Create firmware with `mix firmware`
 * Burn to an SD card with `mix firmware.burn`
   The SD-Card Reader is properly detected.
+* Upload to the device with `mix upload`
 
 for Sensors and Links see the corresponding Wiki pages.

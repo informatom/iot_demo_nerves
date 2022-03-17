@@ -31,14 +31,12 @@ defmodule SensorHub.MixProject do
   defp deps do
     [
       {:nerves, "~> 1.7.4", runtime: false},
-      {:shoehorn, "~> 0.7.0"},
+      {:shoehorn, "~> 0.8.0"},
       {:ring_logger, "~> 0.8.1"},
       {:toolshed, "~> 0.2.13"},
       {:circuits_i2c, "~> 1.0"},
-
       {:nerves_runtime, "~> 0.11.3", targets: @all_targets},
-      {:nerves_pack, "~> 0.6.0", targets: @all_targets},
-
+      {:nerves_pack, "~> 0.7.0", targets: @all_targets},
       {:nerves_system_rpi3, "~> 1.17", runtime: false, targets: :rpi3},
       {:nerves_system_rpi4, "~> 1.17", runtime: false, targets: :rpi4},
       {:nerves_system_osd32mp1, "~> 0.8", runtime: false, targets: :osd32mp1},
