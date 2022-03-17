@@ -5,7 +5,7 @@ SensorHub is an **IOT-Demo Project Weather Station**
 ## Targets
 
 * Raspberry PI 3 as target:
-  `export MIX_TARGET = rpi3`
+  `export MIX_TARGET=rpi3`
 * If MIX_TARGET is unset, host project is buildt for testing.
 * Documenation on [Targets](https://hexdocs.pm/nerves/targets.html#content)
 
