@@ -53,16 +53,10 @@ defmodule VEML6075 do
   @impl true
   def handle_info(
         :measure,
-        %{i2c: i2c, address: address, config: config} = state
+        %{i2c: i2c, address: address, config: _config} = state
       ) do
-    last_reading_uva = Comm.readuva(i2c, address, config)
-    last_reading_uvb = Comm.readuvb(i2c, address, config)
-
-    updated_with_reading = %{
-      state
-      | last_reading_uva: last_reading_uva,
-        last_reading_uvb: last_reading_uvb
-    }
+    last_reading = Comm.read(i2c, address)
+    updated_with_reading = %{state | last_reading: last_reading}
 
     {:noreply, updated_with_reading}
   end

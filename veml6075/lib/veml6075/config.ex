@@ -13,10 +13,10 @@ defmodule VEML6075.Config do
 
     <<integer::16>> = <<
       reserved::9,
-      uv_it(config.uv_it):3,
-      high_dynamic(config.dynamic):1,
-      uv_trig(config,uv_trig):1,
-      uv_av(config.uv_av):1,
+      uv_it(config.uv_it)::3,
+      high_dynamic(config.dynamic)::1,
+      uv_trig(config.uv_trig)::1,
+      uv_av(config.uv_av)::1,
       shutdown(config.shutdown)::1
     >>
 
@@ -45,32 +45,35 @@ defmodule VEML6075.Config do
   defp shutdown(true), do: 1
   defp shutdown(_), do: 0
 
-  calibration_alpha_vis = 1.0;
-  calibration_beta_vis  = 1.0;
-  calibration_gamma_ir  = 1.0;
-  calibration_delta_ir  = 1.0;
+  @calibration_alpha_vis 1.0
+  @calibration_beta_vis 1.0
+  @calibration_gamma_ir 1.0
+  @calibration_delta_ir 1.0
 
-  uva_vis_coef_a = 2.22
-  uva_ir_coef_b  = 1.33
-  uvb_vis_coef_c = 2.95
-  uvb_ir_coef_d = 1.75
-  uva_responsibility = 0.00110
-  uvb_responsibility = 0.00125
+  @uva_vis_coef_a 2.22
+  @uva_ir_coef_b 1.33
+  @uvb_vis_coef_c 2.95
+  @uvb_ir_coef_d 1.75
+  @uva_responsibility 0.00110
+  @uvb_responsibility 0.00125
 
   def convert(uva_raw, uvb_raw, visible_comp, ir_comp) do
     # Calculate the simple UVIA and UVIB. These are used to calculate the UVI signal.
-    uvia = uva_raw - ((uva_vis_coef_a * calibration_alpha_vis * visible_comp) / calibration_gamma_ir)
-                   - ((uva_ir_coef_b  * calibration_alpha_vis * ir_comp) /  calibration_delta_ir)
-    uvib = uvb_raw - ((uvb_vis_coef_c * calibration_beta_vis * visible_comp) / calibration_gamma_ir)
-                   - ((uvb_ir_coef_d  * calibration_beta_vis * ir_comp) /  calibration_delta_ir)
+    uvia =
+      uva_raw - @uva_vis_coef_a * @calibration_alpha_vis * visible_comp / @calibration_gamma_ir -
+        @uva_ir_coef_b * @calibration_alpha_vis * ir_comp / @calibration_delta_ir
+
+    uvib =
+      uvb_raw - @uvb_vis_coef_c * @calibration_beta_vis * visible_comp / @calibration_gamma_ir -
+        @uvb_ir_coef_d * @calibration_beta_vis * ir_comp / @calibration_delta_ir
 
     # Convert raw UVIA and UVIB to values scaled by the sensor responsivity
-    uvia_scaled = uvia * (1.0 / calibration_alpha_vis) * uva_responsibility
-    uvib_scaled = uvib * (1.0 / calibration_beta_vis) * uvb_responsibility
+    uvia_scaled = uvia * (1.0 / @calibration_alpha_vis) * @uva_responsibility
+    uvib_scaled = uvib * (1.0 / @calibration_beta_vis) * @uvb_responsibility
 
     # Use UVIA and UVIB to calculate the average UVI:
-    uvi = (uvia_scaled + uvib_scaled) / 2.0;
+    uvi = (uvia_scaled + uvib_scaled) / 2.0
 
-    {uvia, uvib, uvi}
+    %{uvia: uvia, uvib: uvib, uvi: uvi}
   end
 end
