@@ -17,7 +17,7 @@ defmodule SensorHub.Application do
     [
       {SGP30, []},
       {BMP280, [i2c_address: 0x77, name: BMP280]},
-      {VEML6075, %{}},
+      {VEML6075, []},
       {Finch, name: WeatherTrackerClient},
       {
         Publisher,
