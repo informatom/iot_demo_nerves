@@ -30,6 +30,14 @@ defmodule SensorHub.Application do
     ]
   end
 
+  defp sensors do
+    [Sensor.new(BMP280), Sensor.new(VEML6030), Sensor.new(SGP30)]
+  end
+
+  defp weather_tracker_url do
+    Application.get_env(:sensor_hub, :weather_tracker_url)
+  end
+
   def target() do
     Application.get_env(:sensor_hub, :target)
   end
