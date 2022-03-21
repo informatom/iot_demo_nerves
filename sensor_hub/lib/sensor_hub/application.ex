@@ -1,6 +1,8 @@
 defmodule SensorHub.Application do
   use Application
 
+  alias SensorHub.Sensor
+
   @impl true
   def start(_type, _args) do
     opts = [strategy: :one_for_one, name: SensorHub.Supervisor]
