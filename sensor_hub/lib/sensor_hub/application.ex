@@ -1,6 +1,5 @@
 defmodule SensorHub.Application do
   use Application
-  alias SensorHub.Sensor
 
   @impl true
   def start(_type, _args) do
@@ -17,16 +16,8 @@ defmodule SensorHub.Application do
     [
       {SGP30, []},
       {BMP280, [i2c_address: 0x77, name: BMP280]},
-      {VEML6075, []}
+      {VEML6075, %{}}
     ]
-  end
-
-  defp sensors do
-    [Sensor.new(BMP280), Sensor.new(VEML6075), Sensor.new(SGP30)]
-  end
-
-  defp weather_tracker_url do
-    Application.get_env(:sensor_hub, :weather_tracker_url)
   end
 
   def target() do
