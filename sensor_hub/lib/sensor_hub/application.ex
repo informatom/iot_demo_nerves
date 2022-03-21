@@ -5,9 +5,7 @@ defmodule SensorHub.Application do
   @impl true
   def start(_type, _args) do
     opts = [strategy: :one_for_one, name: SensorHub.Supervisor]
-
-    children = [] ++ children(target())
-
+    children = children(target())
     Supervisor.start_link(children, opts)
   end
 
