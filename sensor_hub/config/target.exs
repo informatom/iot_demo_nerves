@@ -1,32 +1,15 @@
 import Config
 
-# Use shoehorn to start the main application. See the shoehorn
-# docs for separating out critical OTP applications such as those
-# involved with firmware updates.
-
 config :shoehorn,
   init: [:nerves_runtime, :nerves_pack],
   app: Mix.Project.config()[:app]
 
-# Nerves Runtime can enumerate hardware devices and send notifications via
-# SystemRegistry. This slows down startup and not many programs make use of
-# this feature.
-
 config :nerves_runtime, :kernel, use_system_registry: false
-
-# Erlinit can be configured without a rootfs_overlay. See
-# https://github.com/nerves-project/erlinit/ for more information on
-# configuring erlinit.
 
 config :nerves,
   erlinit: [
     hostname_pattern: "nerves-%s"
   ]
-
-# Configure the device for SSH IEx prompt access and firmware updates
-#
-# * See https://hexdocs.pm/nerves_ssh/readme.html for general SSH configuration
-# * See https://hexdocs.pm/ssh_subsystem_fwup/readme.html for firmware updates
 
 keys =
   [
@@ -47,8 +30,6 @@ if keys == [],
 config :nerves_ssh,
   authorized_keys: Enum.map(keys, &File.read!/1)
 
-# Configure the network using vintage_net
-# See https://github.com/nerves-networking/vintage_net for more information
 # Will be overwritten in target.secret.exs, that's NOT checked in into git.
 config :vintage_net,
   regulatory_domain: "US",
@@ -63,16 +44,8 @@ config :vintage_net,
   ]
 
 config :mdns_lite,
-  # The `host` key specifies what hostnames mdns_lite advertises.  `:hostname`
-  # advertises the device's hostname.local. For the official Nerves systems, this
-  # is "nerves-<4 digit serial#>.local".  mdns_lite also advertises
-  # "nerves.local" for convenience. If more than one Nerves device is on the
-  # network, delete "nerves" from the list.
-
   host: [:hostname, "hub"],
   ttl: 120,
-
-  # Advertise the following services over mDNS.
   services: [
     %{
       protocol: "ssh",
@@ -91,9 +64,9 @@ config :mdns_lite,
     }
   ]
 
-# Import target specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-# Uncomment to use target specific configurations
+config :sensor_hub,
+       :weather_tracker_url,
+       "http://<SERVER_IP_OR_HOST_NAME>:4000/api/weather-conditions"
 
 import_config "target.secret.exs"
 # import_config "#{Mix.target()}.exs"
