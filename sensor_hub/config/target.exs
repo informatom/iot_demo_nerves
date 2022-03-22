@@ -66,7 +66,7 @@ config :mdns_lite,
 
 config :sensor_hub,
        :weather_tracker_url,
-       "http://<SERVER_IP_OR_HOST_NAME>:4000/api/weather-conditions"
+       "http://10.0.0.24:4000/api/weather-conditions"
 
 import_config "target.secret.exs"
 # import_config "#{Mix.target()}.exs"

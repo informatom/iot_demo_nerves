@@ -9,7 +9,7 @@ defmodule SensorHub.MixProject do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.13",
       archives: [nerves_bootstrap: "~> 1.10"],
       start_permanent: Mix.env() == :prod,
       build_embedded: true,
@@ -38,6 +38,7 @@ defmodule SensorHub.MixProject do
       {:circuits_i2c, "~> 1.0"},
 
       # Dependencies for all targets except :host
+      {:publisher, path: "../publisher", targets: @all_targets},
       {:veml6075, path: "../veml6075", targets: @all_targets},
       {:sgp30, "~> 0.2.2", targets: @all_targets},
       {:bmp280, "~> 0.2.11", targets: @all_targets},
