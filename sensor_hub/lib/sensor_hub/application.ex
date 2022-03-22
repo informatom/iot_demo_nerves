@@ -30,7 +30,7 @@ defmodule SensorHub.Application do
   end
 
   defp sensors do
-    [Sensor.new(BMP280), Sensor.new(VEML6030), Sensor.new(SGP30)]
+    [Sensor.new(BMP280), Sensor.new(VEML6075), Sensor.new(SGP30)]
   end
 
   defp weather_tracker_url do
